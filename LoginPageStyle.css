@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap");
 
 h1{
     margin: 0;
     margin-top: 10px;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     text-align: center;
     font-size: 38px;
     
@@ -16,7 +16,7 @@ h1{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 14px;
 }
 
@@ -25,12 +25,18 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: lightsteelblue
+    background: url('metalicbackground.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .wrapper{
     width: 420px;
-    background: lightslategray
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    padding: 30px 40px;
 }
 
 .wrapper h1{
@@ -80,8 +86,9 @@ input-box::placeholder{
 .wrapper .remember-forgot{
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
-    margin: -15px 0 15;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+    
 }
 
 .wrapper .remember-forgot a{
@@ -100,5 +107,26 @@ input-box::placeholder{
     outline: none;
     border-radius: 40px;
     font-size: 18px;
-    
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+.wrapper .Signup-link{
+    font-size: 14.5px;
+    text-align: center;
+    margin-top:20px;
+
+}
+
+.Signup-link p a{
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.Signup-link p a:hover{
+    text-decoration: underline;
 }
