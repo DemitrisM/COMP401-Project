@@ -16,7 +16,8 @@ h1{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
 }
 
 body{
@@ -43,6 +44,7 @@ body{
 }
 
 .wrapper .input-box{
+    position: relative;
     width: 100%;
     height: 50px;
     margin: 30px 0;
@@ -57,5 +59,46 @@ body{
     outline: none;
     background: transparent;
     border-radius: 40px;
+    font-size: 16px;
+    color:black;
+    padding: 20px 45px 20px 20px;
     border: 2px solid rgba(255,255,255,0.2);
+}
+
+input-box::placeholder{
+    color: #fff;
+}
+
+.input-box i{  
+    position: absolute;
+    right: 20px;
+    top:50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+.wrapper .remember-forgot{
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin: -15px 0 15;
+}
+
+.wrapper .remember-forgot a{
+    color: #fff;    
+    text-decoration: none;
+}
+.wrapper .remember-forgot a:hover{
+    text-decoration: underline;
+}
+
+.wrapper .btn{
+    width: 100%;
+    height: 40px;
+    background: #fff;
+    border:none;
+    outline: none;
+    border-radius: 40px;
+    font-size: 18px;
+    
 }
