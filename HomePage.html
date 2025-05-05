@@ -1,28 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="HomePageStyle.css">
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.1/css/boxicons.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebWeavers</title>
 
+  <!-- icon libraries -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.1/css/boxicons.min.css" />
+
+  <link rel="stylesheet" href="HomePageStyle.css" />
 </head>
+
 <body>
-  <div class="navbar" >
-    <div class="logo">
-      <img src="web.png" alt="Logo" />
-    <div class="nav-buttons">
-      <i class="fas fa-shopping-cart"></i>
-      <button>Log In</button>
-      <a href="#">Sign up</a>
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar">
+    <!-- left: logo  -->
+    <div class="nav-left">
+      <img src="web.png" alt="WebWeavers logo" class="logo" />
+      <span class="brand">WebWeavers</span>
     </div>
-    <div class="search-wrapper">
-      <div class="box">
-        <input type="text" placeholder="Search...">
-        <a href="#"><i class="fas fa-search"></i></a>
-        <i class='bx bx-search-alt-2'></i>
-      </div>
+
+    <!-- middle: search -->
+    <form class="search-wrapper" role="search">
+      <input type="text" placeholder="Search..." />
+      <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
+
+    <!-- right: cart + auth buttons -->
+    <div class="nav-buttons">
+      <i class="fas fa-shopping-cart cart-icon"></i>
+      <button class="btn login-btn">Log In</button>
+      <a href="#" class="btn signup-btn">Sign up</a>
+    </div>
+  </header>
+
+  <!-- dummy hero so you can scroll and see the fixed bar -->
+  <main class="hero">
+    <h1>Hello, WebWeaver! 👋</h1>
+  </main>
 </body>
 </html>
