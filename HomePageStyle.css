@@ -10,33 +10,7 @@
         align-items: center;
         background: #1daf;
     }
-    .box {
-        height: 30px;
-        display: flex;
-        cursor: pointer;
-        padding: 10px 20px;
-        background: white;
-        border-radius: 30px;
-        align-items: center;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    }
-    .box:hover input{
-      width :400px;
-    }
 
-    .box input{
-      width:0;
-      outline:none;
-      border:none;
-      font-weight: 500;
-      transition: 0.8s;
-      background: transparent;
-    }
-
-    .box a .fas{
-      color: #1daf;
-      font-size: 18px;
-    }
     .navbar {
       background: linear-gradient(to right, #575757, lightsteelblue);
       display: flex;
@@ -59,26 +33,6 @@
         justify-content: flex-end; /* Moves content to the right */
         padding: 20px;
       }
-    /*.search-bar {
-        position: relative;
-        width: 750px;
-    }
-
-    .search-bar input {
-      width: 50%;
-      padding: 10px 40px 10px 40px;
-      border-radius: 25px;
-      border: 1px solid #ccc;
-    }
-
-    .search-bar i {
-        position: absolute;
-        top: 50%;
-        left: 10px;
-        transform: translateY(-50%);
-        color: #999;
-    }*/
-
     .nav-buttons {
       display: flex;
       gap: 15px;
@@ -100,3 +54,37 @@
     .nav-buttons a:hover {
       background-color: #d1d5db;
     }
+   
+    .search-wrapper {
+        height: 30px;
+        display: flex;
+        cursor: pointer;
+        padding: 10px 20px;
+        background: white;
+        border-radius: 30px;
+        align-items: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .search-wrapper:hover input{
+      width :400px;
+    }
+
+    .search-wrapper input{
+      width:0;
+      outline:none;
+      border:none;
+      font-weight: 500;
+      transition: 0.8s;
+      background: transparent;
+    }
+
+    .search-wrapper a .fas{
+      color: #1daf;
+      font-size: 18px;
+    }
+    .search-wrapper  {
+      margin-top: -300px; /* this moves it up */
+      margin-left: -90px; /* this moves it left */
+    }
+    

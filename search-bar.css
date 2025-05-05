@@ -39,3 +39,8 @@
       color: #1daf;
       font-size: 18px;
     }
+    .search-wrapper {
+      margin-top: -300px; /* this moves it up */
+      margin-left: -90px; /* this moves it left */
+    }
+    
