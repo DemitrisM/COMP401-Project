@@ -51,6 +51,7 @@ body {
   border-radius: 999px;
   padding-inline: 0.75rem;
   transition: box-shadow 0.15s;
+  
 }
 .search-wrapper input {
   border: none;
@@ -111,3 +112,4 @@ body {
   text-align: center;
   color: #fff;
 }
+
