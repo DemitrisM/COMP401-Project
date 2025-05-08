@@ -141,14 +141,17 @@ body {
 }
 .top-seller h2 {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .carousel-wrapper {
+  margin-top: 2rem;
   position: relative;
   overflow-x: auto;            /* horizontal scroll here */
   overflow-y: visible;         /* allow shadows above/below */
-  padding: 0 2rem;             /* room for arrows inside */
+  padding: 0 2rem; 
+  z-index: 0;            /* room for arrows inside */
+  height: 600px;
 }
 .carousel-wrapper::-webkit-scrollbar {
   display: none;
@@ -166,7 +169,7 @@ body {
 
 /* Each product card */
 .card {
-  flex: 0 0 240px;
+  flex: 0 0 300px;
   scroll-snap-align: start;
   background: white;
   border-radius: 0.5rem;
@@ -174,13 +177,14 @@ body {
   text-align: center;
   overflow: visible;           /* allow popped-out hover */
   position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.8s ease, box-shadow 0.8s ease;
   z-index: 1;
 }
 .card:hover {
-  transform: scale(1.05);
+  margin-top: 0.8rem;     /*nedim added*/
+  transform: scale(1.05) ;
   box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  z-index: 1000;               /* above the navbar */
+  z-index: 4;               /* above the navbar */
 }
 
 /* Product image */
@@ -225,6 +229,7 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   transition: background 0.2s;
   z-index: 20;                 /* above cards */
+  
 }
 .arrow:hover {
   background: rgba(255,255,255,1);
