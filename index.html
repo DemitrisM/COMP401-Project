@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <script defer src="login.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,27 +15,34 @@
 
 <body>
     <div class="wrapper">
-        <form action="">
-            <img src="web.png" alt="Webweavers Logo" width="350" height="108">
-            <h2>Login</h2>
-            <div class="input-box">
-                <input type="text" placeholder="Email address" required>   
-                <i class='bx bx-user-circle'></i>
-            </div>
-            <div class="input-box">
-                <input type="password" placeholder="Password" required>
-                <i class='bx bx-lock-alt'></i>
-            </div> 
-                
-            <div class="remember-forgot">
-                <label><input type="checkbox"> Remember me</label>
-                <a href="#">Forgot password?</a>
-            </div>
-            <button type="submit" class="btn">Login</button>
-            <div class="Signup-link">
-                <p>Don't have an account? <a href="#">Sign Up</a></p>
-            
+        <form id="loginForm">
+          <img src="web.png" alt="Webweavers Logo" width="350" height="108">
+          <h2>Login</h2>
+      
+          <div class="input-box">
+            <input id="email" type="text" placeholder="Email address" required>
+            <i class='bx bx-user-circle'></i>
+          </div>
+      
+          <div class="input-box">
+            <input id="password" type="password" placeholder="Password" required>
+            <i class='bx bx-lock-alt'></i>
+          </div>
+      
+          <!-- ▼ add an empty span to show error text -->
+          <span id="errorMsg" class="error-msg"></span>
+      
+          <div class="remember-forgot">
+            <label><input type="checkbox"> Remember me</label>
+            <a href="#">Forgot password?</a>
+          </div>
+      
+          <button type="submit" class="btn">Login</button>
+      
+          <div class="Signup-link">
+            <p>Don't have an account? <a href="#">Sign Up</a></p>
+          </div>
         </form>
-    </div>  
+      </div>
 </body>
 

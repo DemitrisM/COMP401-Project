@@ -130,3 +130,11 @@ input-box::placeholder{
 .Signup-link p a:hover{
     text-decoration: underline;
 }
+.error-msg {
+    display:block;
+    color:#ff6464;
+    text-align:center;
+    margin-top:-10px;
+    height:20px;          /* keeps layout stable */
+  }
+  
