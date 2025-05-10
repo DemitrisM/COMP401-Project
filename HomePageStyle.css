@@ -6,7 +6,7 @@
 }
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family:monospace;
   background: white;
   color: #333;
 }
@@ -51,10 +51,11 @@ body {
   align-items: center;
   background: white;
   border-radius: 30px;
-  padding: 8px 16px;
+  padding: 8px 8px;
   transition: box-shadow 0.4s ease;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  margin-right: auto;
 }
 .search-wrapper input {
   width: 0;
@@ -113,14 +114,14 @@ body {
   color: #000000c8;
 }
 .signup-btn {
-  background: transparent;
+  background: #e5e7eb;
   color: #000;
 }
 .login-btn:hover {
   background: #d1d5db;
 }
 .signup-btn:hover {
-  background: transparent;
+  background: #e5e7eb;
   text-decoration: underline;
 }
 
@@ -283,3 +284,4 @@ body {
 .profile-item:hover {
   background: #f5f5f5;
 }
+
