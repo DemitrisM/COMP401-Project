@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CartPageStyle.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Webweavers</title>
+
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+  />
+
+</head> 
+<body>
+    <header class="navbar">
+        <div class="nav-left">
+          <img src="images/web.png" alt="WebWeavers logo" class="logo" />
+        </div>
+        <!--search bar-->
+        <div class="nav-center">
+          <form class="search-wrapper expand-right" method="GET" action="/search">
+            <i class="bi bi-search"></i>
+            <input type="text" name="query" placeholder="Search…" required />
+          </form>
+        </div>
+
+        <!--login, signup and cart buttons-->
+        <div class="nav-right"> 
+          <div class="nav-buttons">
+            <a href="#" class="btn login-btn">Log in</a>
+            <a href="#" class="btn signup-btn">Sign up</a>
+          </div>
+          <button class="cart-btn" aria-label="View cart" type="button">
+            <i class="bi bi-cart3 cart-icon"></i>
+          </button>
+        </div>
+      </header>
+
+      <main class="product-layout">
+        <!-- Left column: Product cards -->
+        <div class="product-column"> <!-- main column -->
+
+            <div class="img-subcolumn"> <!-- subcolumn left-->
+                <div class="product-card">
+                <img src="./metalicbackground.jpg" alt="Product 1" />
+                </div>
+            </div>
+
+          
+          
+          <!-- Add more product cards here -->
+        </div>
+      
+        <!-- Right column: Checkout -->
+        <div class="checkout-column">
+          <h2>Checkout</h2>
+        </div>
+      </main>
+    </body>
+
+</html>
+    
