@@ -244,3 +244,42 @@ body {
   font-size: 1.25rem;
   color: #333;
 }
+/* profile icon reuses .btn styles */
+.profile-btn {
+  background: transparent;
+  color: #000;
+  font-size: 1.7rem;
+  padding: 0 .4rem;
+  display:flex;
+  align-items:center;
+}
+
+/* wrapper is position:relative so dropdown anchors to it */
+.profile-wrapper { position: relative; }
+
+/* hidden by default */
+.profile-menu {
+  position: absolute;
+  right: 0;
+  top: 120%;                /* just below the icon */
+  min-width: 180px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  padding: .75rem 0;
+  display: none;
+  z-index: 9999;
+}
+
+.profile-menu.open { display:block; }
+
+.profile-item {
+  padding: .55rem 1.2rem;
+  font-size: .9rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.profile-item:hover {
+  background: #f5f5f5;
+}

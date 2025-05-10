@@ -12,7 +12,10 @@ form.addEventListener('submit', e => {
   const pass  = passEl.value;
 
   if (email === 'user' && pass === '1234') {
-    // 👇 success → redirect
+    /*** NEW – remember login status (can later store JWT, userId, etc.) ***/
+    localStorage.setItem('loggedIn', 'true');
+  
+    /* Redirect */
     window.location.href = 'HomePage.html';
   } else {
     errorEl.textContent = 'Invalid e-mail or password.';
