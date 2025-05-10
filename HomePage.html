@@ -3,110 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Font-Awesome & Bootstrap Icons -->
+
+  <!-- Icon libraries -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
-  <!-- Page styles -->
+
+  <!-- Styles -->
   <link rel="stylesheet" href="HomePageStyle.css" />
   <title>Home Page</title>
 </head>
-
 <body>
-  <!-- ——— Top Seller Carousel ——— -->
-  <section class="top-seller">
-    <h2>Top Seller</h2>
-    <div class="carousel-container">
-      <button class="arrow arrow-left" aria-label="Scroll left">
-        <i class="bi bi-chevron-left"></i>
-      </button>
 
-      <div class="carousel-wrapper">
-        <div class="carousel">
-          <!-- eight example cards (unchanged) -->
-          <div class="card">
-            <img src="images/Wall_lamp.png" alt="Product 1" />
-            <div class="card-info">
-              <h3>Wall sconce</h3>
-              <p class="card-desc">Elegant wall sconce for a stylish and modern home.</p>
-            </div>
-          </div>
-          <!-- Card 2 -->
-          <div class="card">
-            <img src="images/Square_planter.png" alt="Product 2" />
-            <div class="card-info">
-              <h3>Square Planter</h3>
-              <p class="card-desc">Modern square planter for any home</p>
-            </div>
-          </div>
-          <!-- Card 3 -->
-          <div class="card">
-            <img src="images/Fridge_Magnets.png" alt="Product 3" />
-            <div class="card-info">
-              <h3>Ivy Fridge Magnet - Flower Magnets</h3>
-              <p class="card-desc">Ivy and flower magnets for your fridge</p>
-            </div>
-          </div>
-          <!-- Card 4 -->
-          <div class="card">
-            <img src="images/Coaster.png" alt="Product 4" />
-            <div class="card-info">
-              <h3>Monstera Coasters</h3>
-              <p class="card-desc">Monstera Plant with a lot of hidden coasters</p>
-            </div>
-          </div>
-          <!-- Card 5 -->
-          <div class="card">
-            <img src="images/Trellis.png" alt="Product 5" />
-            <div class="card-info">
-              <h3>Trellis storage system</h3>
-              <p class="card-desc">Wall storage system with lots of accesories</p>
-            </div>
-          </div>
-          <!-- Card 6 -->
-          <div class="card">
-            <img src="images/Planets.png" alt="Product 6" />
-            <div class="card-info">
-              <h3>Planet Lamps</h3>
-              <p class="card-desc">Unique planet lamps</p>
-            </div>
-          </div>
-          <!-- Card 7 -->
-          <div class="card">
-            <img src="images/Holder.png" alt="Product 7" />
-            <div class="card-info">
-              <h3>Dragon Controller Holder</h3>
-              <p class="card-desc">Unique controller holder with auto-locking mechanisms</p>
-            </div>
-          </div>
-          <!-- Card 8 -->
-          <div class="card">
-            <img src="images/Tissue_holder.png" alt="Product 8" />
-            <div class="card-info">
-              <h3>Tissue box cover</h3>
-              <p class="card-desc">Whale inspired tissue box cover for kids</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button class="arrow arrow-right" aria-label="Scroll right">
-        <i class="bi bi-chevron-right"></i>
-      </button>
-    </div>
-  </section>
-
-  <header class=" bar">
-    <div class="nav-left">
-      <img src="images/web.png" alt="WebWeavers logo" class="logo" />
-    </div>
-
-    <!-- ——— Navbar ——— -->
+  <!-- ─── Navbar ─────────────────────────────────────────────── -->
   <header class="navbar">
     <div class="nav-left">
       <img src="images/web.png" alt="WebWeavers logo" class="logo" />
     </div>
-    
+
     <div class="nav-center">
       <form class="search-wrapper expand-right" method="GET" action="/search">
         <i class="bi bi-search"></i>
@@ -120,22 +34,116 @@
         <div class="totalQuantity">0</div>
       </button>
       <div class="nav-buttons">
-        <!-- single button shown when NOT logged-in -->
-        <a href="LoginPage.html" class="btn signup-btn" id="signupTrigger">
-          Log In
-        </a>
-      </div>      
+        <a href="LoginPage.html" class="btn signup-btn" id="signupTrigger">Log In</a>
+      </div>
     </div>
   </header>
 
-  <!-- ——— Hero Section ——— -->
+  <!-- ─── Top-Seller Carousel ────────────────────────────────── -->
+  <section class="top-seller">
+    <h2>Top Seller</h2>
+    <div class="carousel-container">
+      <button class="arrow arrow-left" aria-label="Scroll left">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+
+      <div class="carousel-wrapper">
+        <div class="carousel">
+          <!-- eight example cards -->
+          <div class="card">
+            <img src="images/Wall_lamp.png" alt="Product 1" />
+            <div class="card-info">
+              <h3>Wall sconce</h3>
+              <p class="card-desc">Elegant wall sconce for a stylish and modern home.</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/Square_planter.png" alt="Product 2" />
+            <div class="card-info">
+              <h3>Square Planter</h3>
+              <p class="card-desc">Modern square planter for any home</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/Fridge_Magnets.png" alt="Product 3" />
+            <div class="card-info">
+              <h3>Ivy Fridge Magnet - Flower Magnets</h3>
+              <p class="card-desc">Ivy and flower magnets for your fridge</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/Coaster.png" alt="Product 4" />
+            <div class="card-info">
+              <h3>Monstera Coasters</h3>
+              <p class="card-desc">Monstera plant with a lot of hidden coasters</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/Trellis.png" alt="Product 5" />
+            <div class="card-info">
+              <h3>Trellis storage system</h3>
+              <p class="card-desc">Wall storage system with lots of accessories</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/Planets.png" alt="Product 6" />
+            <div class="card-info">
+              <h3>Planet Lamps</h3>
+              <p class="card-desc">Unique planet lamps</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/Holder.png" alt="Product 7" />
+            <div class="card-info">
+              <h3>Dragon Controller Holder</h3>
+              <p class="card-desc">Unique controller holder with auto-locking mechanisms</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/Tissue_holder.png" alt="Product 8" />
+            <div class="card-info">
+              <h3>Tissue box cover</h3>
+              <p class="card-desc">Whale-inspired tissue box cover for kids</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="arrow arrow-right" aria-label="Scroll right">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- ─── Product Catalogue ──────────────────────────────────── -->
+  <div class="container">
+    <header>
+      <h1>LIST PRODUCT</h1>
+      <div class="iconCart">
+        <img src="icon.png" alt="">
+        <div class="totalQuantity">0</div>
+      </div>
+    </header>
+
+    <div class="listProduct">
+      <div class="item">
+        <img src="images/1.webp" alt="">
+        <h2>CoPilot / Black / Automatic</h2>
+        <div class="price">$550</div>
+        <button>Add To Cart</button>
+      </div>
+      <!-- more items will be injected by app.js -->
+    </div>
+  </div>
+
+  <!-- ─── Hero Section (optional) ─────────────────────────────── -->
   <main class="hero">
     <!-- hero content here -->
   </main>
-  <!-- --- Scripts --- -->
+
+  <!-- ─── Scripts ─────────────────────────────────────────────── -->
   <script src="carousel.js"></script>
-  <!-- swap Sign-up for profile icon if user is logged in -->
   <script src="home.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
-
