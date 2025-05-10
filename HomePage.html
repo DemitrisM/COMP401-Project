@@ -96,11 +96,17 @@
     </div>
   </section>
 
-  <header class="navbar">
+  <header class=" bar">
     <div class="nav-left">
       <img src="images/web.png" alt="WebWeavers logo" class="logo" />
     </div>
 
+    <!-- ——— Navbar ——— -->
+  <header class="navbar">
+    <div class="nav-left">
+      <img src="images/web.png" alt="WebWeavers logo" class="logo" />
+    </div>
+    
     <div class="nav-center">
       <form class="search-wrapper expand-right" method="GET" action="/search">
         <i class="bi bi-search"></i>
@@ -113,11 +119,11 @@
         <i class="bi bi-cart3 cart-icon"></i>
       </button>
       <div class="nav-buttons">
-        <!-- Log in button -->
-        <a href="LoginPage.html" class="btn login-btn">Log in</a>
-        <!-- Sign up button (will be swapped by home.js after login) -->
-        <a href="LoginPage.html" class="btn signup-btn" id="signupLink">Sign up</a>
-      </div>
+        <!-- single button shown when NOT logged-in -->
+        <a href="LoginPage.html" class="btn signup-btn" id="signupTrigger">
+          Hi! Sign up
+        </a>
+      </div>      
     </div>
   </header>
 

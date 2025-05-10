@@ -1,23 +1,25 @@
 // home.js  – navbar profile dropdown + logout
 document.addEventListener('DOMContentLoaded', () => {
     const navButtons = document.querySelector('.nav-buttons');
-    const signupBtn  = document.getElementById('signupLink');
+    if (!navButtons) return;          // safety guard
+  
     const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
+    if (!isLoggedIn) return;          // not logged-in ➜ leave “Hi Sign up” visible
   
-    if (!isLoggedIn) return;               // not logged in → nothing to do
+    /* ----------- remove ALL sign-up buttons ----------- */
+    navButtons
+      .querySelectorAll('.signup-btn, #signupTrigger, #signupLink')
+      .forEach(el => el.remove());
   
-    /* ---------- build the profile button --------- */
-    if (signupBtn) signupBtn.remove();      // remove "Sign up"
-  
+    /* ----------- build profile button + dropdown ------- */
     const profileWrapper = document.createElement('div');
     profileWrapper.className = 'profile-wrapper'; // for relative pos
   
     const profileBtn = document.createElement('button');
+    profileBtn.type = 'button';
     profileBtn.className = 'btn profile-btn';
     profileBtn.innerHTML = '<i class="bi bi-person-circle"></i>';
-    profileBtn.type = 'button';
   
-    /* ---------- build the dropdown menu ---------- */
     const menu = document.createElement('div');
     menu.className = 'profile-menu';
     menu.innerHTML = `
@@ -29,26 +31,24 @@ document.addEventListener('DOMContentLoaded', () => {
     profileWrapper.appendChild(menu);
     navButtons.appendChild(profileWrapper);
   
-    /* ---------- toggle / hide logic --------------- */
-    profileBtn.addEventListener('click', (e) => {
-      e.stopPropagation();                  // don’t bubble to body
+    /* ---- toggle menu on icon click ---- */
+    profileBtn.addEventListener('click', e => {
+      e.stopPropagation();
       menu.classList.toggle('open');
     });
   
-    // click outside closes the menu
+    /* ---- click outside closes menu ---- */
     document.body.addEventListener('click', () => menu.classList.remove('open'));
+    menu.addEventListener('click', e => e.stopPropagation()); // keep menu open
   
-    // stop clicks inside the menu from closing it immediately
-    menu.addEventListener('click', (e) => e.stopPropagation());
-  
-    /* ---------- sign-out handler ------------------ */
+    /* ---- sign-out ---- */
     document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('loggedIn');   // clear fake session
-      location.reload();                     // reload → navbar resets
+      localStorage.removeItem('loggedIn');   // clear stub session
+      location.reload();                     // reload -> “Hi Sign up” returns
     });
   
-    // (placeholder) account settings
+    /* ---- placeholder account link ---- */
     document.getElementById('accountSettings')
-            .addEventListener('click', () => alert('Account page TBD'));
+            .addEventListener('click', () => alert('Account page – coming soon'));
   });
   
