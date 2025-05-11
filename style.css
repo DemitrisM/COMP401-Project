@@ -1,6 +1,6 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500&display=swap');
 body{
-    font-family: monospace;
+    font-family: "Ubuntu";
     overflow-x: hidden;
     font-synthesis: 15px;
 }
@@ -66,7 +66,7 @@ header .totalQuantity{
     position: absolute;
     top: 50%;
     left: 50%;
-    background-color: #e6572c;
+    background-color: transparent;
     color: #fff;
     width: 50%;
     border: none;
@@ -168,16 +168,19 @@ header .totalQuantity{
     padding: 20px;
 }
 .checkoutLayout .right{
-    background-color: #5358B3;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
     border-radius: 20px;
     padding: 40px;
     color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 .checkoutLayout .right .form{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    border-bottom: 1px solid #7a7fe2;
+    border-bottom: 1.75px solid #eee;
     padding-bottom: 20px;
 }
 .checkoutLayout .form h1,
@@ -194,8 +197,9 @@ header .totalQuantity{
     border-radius: 20px;
     margin-top: 10px;
     border:none;
-    background-color: #6a6fc9;
-    color: #fff;
+    background-color: white;
+    color: black;
+    
 }
 .checkoutLayout .right .return .row{
     display: flex;
@@ -212,16 +216,15 @@ header .totalQuantity{
     height: 40px;
     border: none;
     border-radius: 20px;
-    background-color: #49D8B9;
+    background-color: #3AD29F;
     margin-top: 20px;
     font-weight: bold;
     color: #fff;
-
-
 }
 .returnCart h1{
     border-top: 1px solid #eee;  
     padding: 20px 0;
+    color: #eee;
 }
 .returnCart .list .item img{
     height: 80px;
@@ -247,7 +250,7 @@ header .totalQuantity{
   inset:0;
   z-index:-1;                   /* sit behind every layout panel */
   overflow:hidden;
-  background-image:linear-gradient(45deg,#090080 0%,#0294e9 46%,#ae00ff 100%);
+  background-image:linear-gradient(45deg,#575757 0%,#575757 46%,white 100%);
 }
 
 .bubble{
@@ -297,5 +300,21 @@ header .totalQuantity{
 }
 @keyframes spin{
   to {transform:rotate(360deg);}
+}
+.logo-container {
+    position: fixed; /* Keep it visible even when scrolling */
+    top: 20px;
+    left: 20px;
+    z-index: 9999; /* Make sure it's above everything else */
+}
+
+.logo-container .logo {
+    height: 50px;
+    margin-left: 10px;
+}
+.buttonCheckout:hover {
+    transform: scale(1.05);
+    background-color: #3AD29F;
+    transition: all 0.3s ease;
 }
 
