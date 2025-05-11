@@ -1,0 +1,35 @@
+{
+  "name": "comp401-project",
+  "version": "1.0.0",
+
+  "main": "app.js",                       
+  "scripts": {
+    "start": "node app.js"               
+  },
+
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.3"
+  },
+
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DemitrisM/COMP401-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DemitrisM/COMP401-Project/issues"
+  },
+  "homepage": "https://github.com/DemitrisM/COMP401-Project#readme",
+  "description": ""
+}

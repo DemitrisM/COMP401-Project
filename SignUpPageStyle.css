@@ -179,3 +179,21 @@ width: 100%;
     border: 2px solid white;
     box-shadow: none;
 }
+/* ----- toast ----- */
+.toast{
+  position: fixed;
+  top: 2rem; left: 50%;
+  transform: translateX(-50%);
+  background: #222;             /* default (error) colour */
+  color:#fff;
+  padding:.75rem 1.5rem;
+  border-radius:6px;
+  font-size:1rem;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity .35s ease;
+  z-index:9999;
+}
+.toast.show{ opacity:1; }
+.toast.success{ background:#2e9648; }  /* green */
+.toast.error  { background:#c93535; }  /* red   */

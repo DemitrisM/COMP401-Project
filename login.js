@@ -1,23 +1,50 @@
-// login.js  – front-end stub auth
-const form      = document.getElementById('loginForm');
-const emailEl   = document.getElementById('email');
-const passEl    = document.getElementById('password');
-const errorEl   = document.getElementById('errorMsg');
+// login.js  – real API call + JWT storage
+// ---------------------------------------
+const form    = document.getElementById('loginForm');
+const emailEl = document.getElementById('email');
+const passEl  = document.getElementById('password');
+const errorEl = document.getElementById('errorMsg');
 
-form.addEventListener('submit', e => {
-  e.preventDefault();                       // stop real submit
+// ⬇ Adjust if your back-end runs on a different host/port
+const API_BASE = 'http://localhost:3000';
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
   errorEl.textContent = '';                 // clear previous errors
 
-  const email = emailEl.value.trim();
-  const pass  = passEl.value;
+  /* build request body */
+  const payload = {
+    email:    emailEl.value.trim(),
+    password: passEl.value
+  };
 
-  if (email === 'user' && pass === '1234') {
-    /*** NEW – remember login status (can later store JWT, userId, etc.) ***/
-    localStorage.setItem('loggedIn', 'true');
-  
-    /* Redirect */
+  try {
+    /* POST /auth/login */
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      // 401 or other error → show message, stay on page
+      errorEl.textContent =
+        res.status === 401 ? 'Invalid e-mail or password.'
+                           : 'Login failed – try again';
+      return;
+    }
+
+    /* success → parse JSON, store JWT & meta */
+    const data = await res.json();          // { token, role, username }
+    localStorage.setItem('token',    data.token);
+    localStorage.setItem('role',     data.role);
+    localStorage.setItem('username', data.username);
+
+    /* navigate to home page */
     window.location.href = 'HomePage.html';
-  } else {
-    errorEl.textContent = 'Invalid e-mail or password.';
+  }
+  catch (err) {
+    console.error(err);
+    errorEl.textContent = 'Network error – please try later';
   }
 });
