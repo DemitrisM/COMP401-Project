@@ -248,8 +248,8 @@ body {
 }
 /* ============  PRODUCT CATALOGUE  ============ */
 .container{                /* wrapper around the whole list */
-  width:1200px;
-  max-width:90%;
+  width:3000px;
+  max-width:97%;
   margin:auto;
   transition:transform 1s;
   margin-left: 2rem;     /* same value as .top-seller’s left padding  */
@@ -257,16 +257,16 @@ body {
 }
 
 .listProduct{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* 4 across  */
+  gap: 1.5rem;  
 }
 
 .listProduct .item{position:relative;}
 .listProduct .item img{
-  width:100%;
+  width:101%;
   height:430px;
-  object-fit:cover;
+  object-fit:fill;
 }
 .listProduct .item h2{
   font-weight:700;
