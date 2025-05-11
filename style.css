@@ -268,7 +268,7 @@ header .totalQuantity{
   border-radius:50%;
   backdrop-filter:blur(2px);
   bottom:-150px;
-  animation:rise 20s linear infinite, spin 5s linear infinite;
+  animation:rise 4s linear infinite, spin 5s linear infinite;
 }
 
 /* — position / size variations (21 bubbles) — */
