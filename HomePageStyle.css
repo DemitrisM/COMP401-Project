@@ -154,6 +154,8 @@ body {
   padding: 0 2rem 1rem;
   z-index: 0;            /* room for arrows inside */
   height: 490px;
+  max-width: 50000px;
+  /*width: 3000px;*/
 }
 .carousel-wrapper::-webkit-scrollbar {
   display: none;
@@ -468,5 +470,14 @@ body {
 
 .profile-item:hover {
   background: #f5f5f5;
+}
+/* clickable catalogue titles & images – look like normal card content */
+.product-link{
+  display:block;            /* fills card width – large click target  */
+  color:black;            /* same colour as <h2> headline            */
+  text-decoration:none;     /* no blue & no underline                  */
+}
+.product-link:hover{
+  text-decoration:underline;/* optional subtle cue on hover            */
 }
 
