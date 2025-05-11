@@ -261,7 +261,8 @@ body {
 .listProduct{
   display: grid;
   grid-template-columns: repeat(4, 1fr);   /* 4 across  */
-  gap: 1.5rem;  
+  gap: 1.5rem; 
+  position: sticky; 
 }
 
 .listProduct .item{position:relative;}
@@ -480,4 +481,5 @@ body {
 .product-link:hover{
   text-decoration:underline;/* optional subtle cue on hover            */
 }
-
+/* slide-in state */
+.cart.open { right: 0; }

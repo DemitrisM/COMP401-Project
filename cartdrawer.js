@@ -1,21 +1,18 @@
-let iconCart = document.querySelector('.iconCart');
+let iconCart = document.querySelector('.cart-btn');
 let cart = document.querySelector('.cart');
 let container = document.querySelector('.container');
 let close = document.querySelector('.close');
+const cartButtons = document.querySelectorAll( '.cart-btn');
 
-iconCart.addEventListener('click', function(){
-    if(cart.style.right == '-100%'){
-        cart.style.right = '0';
-        container.style.transform = 'translateX(-400px)';
-    }else{
-        cart.style.right = '-100%';
-        container.style.transform = 'translateX(0)';
-    }
-})
-close.addEventListener('click', function (){
-    cart.style.right = '-100%';
-    container.style.transform = 'translateX(0)';
-})
+const cartDrawer  = document.querySelector('.cart');
+const closeBtn    = document.querySelector('.close');
+
+function toggleDrawer() {
+  cartDrawer.classList.toggle('open');   // add/remove .open
+}
+
+cartButtons.forEach(btn => btn.addEventListener('click', toggleDrawer));
+closeBtn.addEventListener('click', () => cartDrawer.classList.remove('open'));
 
 
 let products = null;
