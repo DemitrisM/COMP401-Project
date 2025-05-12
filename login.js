@@ -1,23 +1,29 @@
-// login.js  – front-end stub auth
-const form      = document.getElementById('loginForm');
-const emailEl   = document.getElementById('email');
-const passEl    = document.getElementById('password');
-const errorEl   = document.getElementById('errorMsg');
+// login.js – verify credentials against back-end
+const form    = document.getElementById('loginForm');
+const errorEl = document.getElementById('errorMsg');
 
-form.addEventListener('submit', e => {
-  e.preventDefault();                       // stop real submit
-  errorEl.textContent = '';                 // clear previous errors
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorEl.textContent = '';
 
-  const email = emailEl.value.trim();
-  const pass  = passEl.value;
+  // Collect form data into an object
+  const dto = Object.fromEntries(new FormData(form).entries()); // {email, password}
 
-  if (email === 'user' && pass === '1234') {
-    /*** NEW – remember login status (can later store JWT, userId, etc.) ***/
-    localStorage.setItem('loggedIn', 'true');
-  
-    /* Redirect */
-    window.location.href = 'HomePage.html';
-  } else {
-    errorEl.textContent = 'Invalid e-mail or password.';
+  try {
+    const res = await fetch('/login', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify(dto)
+    });
+
+    if (res.ok) {
+      /* optionally store session info here:
+         localStorage.setItem('role', (await res.json()).role); */
+      window.location.href = 'HomePage.html';
+    } else {
+      errorEl.textContent = 'Invalid e-mail or password.';
+    }
+  } catch {
+    errorEl.textContent = 'Network error – please try again.';
   }
 });

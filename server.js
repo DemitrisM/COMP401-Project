@@ -60,6 +60,23 @@ const ROOT = __dirname;           // e.g. /home/.../COMP401-Project
     res.sendStatus(201);
   });
 
+  // ─── LOGIN route ─────────────────────────────────────────────
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body || {};
+  if (!email || !password) return res.status(400).send('Bad request');
+
+  // fetch user row
+  const user = await db.get('SELECT * FROM USERS WHERE Email = ?', email.trim());
+  if (!user) return res.sendStatus(401); // unknown e-mail
+
+  // compare hashed password
+  const ok = await bcrypt.compare(password, user.Password);
+  if (!ok) return res.sendStatus(401);
+
+  // success – you could generate a token or just reply 200
+  res.json({ role: user.Role, username: user.Username });
+});
+
   // ───── Start server ───────────────────────────────────────
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () =>
