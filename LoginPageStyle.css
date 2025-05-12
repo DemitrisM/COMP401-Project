@@ -25,18 +25,20 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('metalicbackground.jpg') no-repeat;
+    background: lightsteelblue;
     background-size: cover;
     background-position: center;
+   
 }
 
 .wrapper{
     width: 420px;
-    background: transparent;
+    background: grey;
     border: 2px solid rgba(255,255,255,0.2);
     backdrop-filter: blur(20px);
     border-radius: 10px;
     padding: 30px 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
 .wrapper img{
@@ -71,7 +73,7 @@ body{
     border: 2px solid rgba(255,255,255,0.2);
 }
 
-input-box::placeholder{
+.input-box input::placeholder {
     color: #fff;
 }
 
