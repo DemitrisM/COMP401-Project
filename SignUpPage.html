@@ -1,74 +1,81 @@
 <!DOCTYPE html>
-<lang="en">
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sign Up</title>
-        <link rel="stylesheet" href="SignUpPageStyle.css">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
 
-    </head>
+  <link rel="stylesheet" href="SignUpPageStyle.css" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+</head>
 
-    <body>
-        <div class="container">
-            <div class="form-container user">
-                <form action="">
-                    <h1>Create an Account</h1>
-              
-                    <div class="input-box">
-                        <input type="text" placeholder="Username" required>
-                        <i class="bx bxs-user"></i>
-                    </div>
-                    <div class="input-box">
-                        <input type="email" placeholder="Email" required>
-                        <i class='bx bxs-envelope'></i>
-                    </div>
-                    <div class="input-box">
-                        <input type="text" placeholder="Password" required>
-                        <i class="bx bxs-lock-alt"></i>
-                    </div>
-                    <button type="submit" class="btn">Sign Up</button>
-                </form>
-            </div>
+<body>
+  <div class="container">
 
-            <div class="form-container admin">
-                <form action="">
-                    <h1>Register</h1>
-              
-                    <div class="input-box">
-                        <input type="text" placeholder="Username" required>
-                        <i class="bx bxs-user"></i>
-                    </div>
-                    <div class="input-box">
-                        <input type="email" placeholder="Email" required>
-                        <i class='bx bxs-envelope'></i>
-                    </div>
-                    <div class="input-box">
-                        <input type="text" placeholder="Password" required>
-                        <i class="bx bxs-lock-alt"></i>
-                    </div>
-                    <button type="submit" class="btn">Sign Up</button>
-                </form>
-            </div>
+    <!-- BUYER form — added id="userForm" -->
+    <div class="form-container user">
+      <form id="userForm" action="">
+        <h1>Create an Account</h1>
+        <input type="hidden" name="role" value="CUSTOMER" />
 
-            <div class="toggle-container">
-                <!-- user perspective -->
-                <div class="toggle-panel toggle-left">
-                    <h1>Hello, Welcome!</h1>
-                    <p>Register as a seller?</p>
-                    <button class="btn user-register-btn">Register</button>
-                </div>
-                <!-- admin perspective -->
-                <div class="toggle-panel toggle-right">
-                    <h1>Hello, Welcome!</h1>
-                    <p>Sign up as a user?</p>
-                    <button class="btn admin-register-btn">Sign Up</button>
-                </div>
-            </div>   
+        <div class="input-box">
+          <input name="username" type="text" placeholder="Username" required />
+          <i class="bx bxs-user"></i>
+        </div>
+        <div class="input-box">
+          <input name="email" type="email" placeholder="Email" required />
+          <i class="bx bxs-envelope"></i>
+        </div>
+        <div class="input-box">
+          <input name="password" type="password" placeholder="Password" required />
+          <i class="bx bxs-lock-alt"></i>
         </div>
 
-        <script src="SignUp.js"></script>
-    </body>
+        <button type="submit" class="btn">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- SELLER form — added id="sellerForm" -->
+    <div class="form-container admin">
+      <form id="sellerForm" action="">
+        <h1>Register</h1>
+        <input type="hidden" name="role" value="SELLER" />
+
+        <div class="input-box">
+          <input name="username" type="text" placeholder="Username" required />
+          <i class="bx bxs-user"></i>
+        </div>
+        <div class="input-box">
+          <input name="email" type="email" placeholder="Email" required />
+          <i class="bx bxs-envelope"></i>
+        </div>
+        <div class="input-box">
+          <input name="password" type="password" placeholder="Password" required />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+
+        <button type="submit" class="btn">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- toggle panels (unchanged) -->
+    <div class="toggle-container">
+      <div class="toggle-panel toggle-left">
+        <h1>Hello, Welcome!</h1>
+        <p>Register as a seller?</p>
+        <button class="btn user-register-btn">Register</button>
+      </div>
+      <div class="toggle-panel toggle-right">
+        <h1>Hello, Welcome!</h1>
+        <p>Register as a user?</p>
+        <button class="btn admin-register-btn">Register</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- existing toggle script -->
+  <script src="SignUpToggle.js"></script>
+  <!-- NEW: actual signup submission logic -->
+  <script src="SignUp.js" defer></script>
+</body>
 </html>
-    
