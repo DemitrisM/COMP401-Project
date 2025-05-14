@@ -77,19 +77,21 @@ app.post('/login', async (req, res) => {
   res.json({ role: user.Role, username: user.Username });
 });
 
-/* ─────────────────────────────────────────────
-   GET  /api/products   → list every SKU
-────────────────────────────────────────────── */
-app.get('/api/products', async (_, res) => {
-  const db = await getDB();
+/* GET /api/products */
+app.get('/api/products', async (_req, res) => {
   const rows = await db.all(`
-    SELECT SKUID, Name, Price, Picture, Description
+    SELECT SKUID,
+           Name,
+           Price,
+           '/images/' || Picture AS Picture,   -- ← prepend folder
+           Description
     FROM   SKU
-    JOIN   PRODUCTS  USING (ProdID)
+    JOIN   PRODUCTS USING (ProdID)
     ORDER  BY SKUID
   `);
-  res.json(rows);      // [{SKUID,Name,Price,Picture,Description}, …]
+  res.json(rows);
 });
+
 
 /* ─────────────────────────────────────────────
    POST /api/cart           { userId? } → returns cartId
