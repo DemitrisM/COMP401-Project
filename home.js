@@ -51,4 +51,55 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('accountSettings')
             .addEventListener('click', () => alert('Account page – coming soon'));
   });
-  
+  /* ─── 1. Fetch catalogue & render listProduct ───────────────────────── */
+async function loadCatalogue() {
+  const res  = await fetch('/api/products');
+  const data = await res.json();          // [{SKUID,Name,Price,Picture,Description}, …]
+
+  const list = document.querySelector('.listProduct');
+  const tpl  = list.querySelector('.item');    // first hard-coded card as template
+  list.innerHTML = '';                         // clear existing demo cards
+
+  data.forEach(p => {
+    const node  = tpl.cloneNode(true);
+    node.querySelector('img').src  = p.Picture;
+    node.querySelector('img').alt  = p.Name;
+    node.querySelector('h2 a').textContent = p.Name;
+    node.querySelector('.price').textContent = `$${p.Price}`;
+    node.querySelector('button').dataset.sku = p.SKUID;
+    list.appendChild(node);
+  });
+}
+
+/* ─── 2. Add-to-Cart handler (localStorage cartId) ─────────────────── */
+async function attachAddToCart() {
+  const list = document.querySelector('.listProduct');
+  list.addEventListener('click', async e => {
+    if (!e.target.matches('button')) return;
+    const skuId = +e.target.dataset.sku;
+
+    let cartId = localStorage.getItem('cartId');
+    if (!cartId) {
+      // first time ➜ create cart
+      const newCart = await fetch('/api/cart', { method:'POST', headers:{'Content-Type':'application/json'}, body:'{}' })
+                            .then(r => r.json());
+      cartId = newCart.cartId;
+      localStorage.setItem('cartId', cartId);
+    }
+
+    // add item
+    const res = await fetch(`/api/cart/${cartId}/items`, {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify({ skuId, qty: 1 })
+    }).then(r => r.json());
+
+    // update badge
+    document.querySelector('.totalQuantity').textContent = res.totalQty;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadCatalogue();
+  attachAddToCart();
+});

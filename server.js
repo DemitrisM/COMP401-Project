@@ -3,7 +3,7 @@
  * DB file : dreamweaver_db.sqlite
  * Schema  : dreamweaver_db.sql  (run once)
  */
-
+const getDB = require('./db');   // new helper
 const path     = require('path');
 const express  = require('express');
 const bcrypt   = require('bcrypt');
@@ -75,6 +75,75 @@ app.post('/login', async (req, res) => {
 
   // success – you could generate a token or just reply 200
   res.json({ role: user.Role, username: user.Username });
+});
+
+/* ─────────────────────────────────────────────
+   GET  /api/products   → list every SKU
+────────────────────────────────────────────── */
+app.get('/api/products', async (_, res) => {
+  const db = await getDB();
+  const rows = await db.all(`
+    SELECT SKUID, Name, Price, Picture, Description
+    FROM   SKU
+    JOIN   PRODUCTS  USING (ProdID)
+    ORDER  BY SKUID
+  `);
+  res.json(rows);      // [{SKUID,Name,Price,Picture,Description}, …]
+});
+
+/* ─────────────────────────────────────────────
+   POST /api/cart           { userId? } → returns cartId
+────────────────────────────────────────────── */
+app.post('/api/cart', async (req, res) => {
+  const db = await getDB();
+  const { userId = null } = req.body || {};
+  const x   = await db.run(
+    `INSERT INTO CARTS (UserID) VALUES (?)`,
+    userId
+  );
+  res.status(201).json({ cartId: x.lastID });
+});
+
+/* ─────────────────────────────────────────────
+   POST /api/cart/:id/items   { skuId, qty }
+────────────────────────────────────────────── */
+app.post('/api/cart/:id/items', async (req, res) => {
+  const db    = await getDB();
+  const cartId = +req.params.id;
+  const { skuId, qty = 1 } = req.body || {};
+
+  // upsert line-item
+  await db.run(`
+    INSERT INTO CARTPRODUCTS (CartID, SKUID, Qty)
+         VALUES (?,?,?)
+    ON CONFLICT (CartID,SKUID)
+       DO UPDATE SET Qty = Qty + excluded.Qty
+  `, cartId, skuId, qty);
+
+  // return new total
+  const { total } = await db.get(
+    `SELECT COALESCE(SUM(Qty),0) AS total
+       FROM CARTPRODUCTS
+      WHERE CartID=?`,
+    cartId
+  );
+  res.json({ totalQty: total });
+});
+
+/* ─────────────────────────────────────────────
+   GET /api/cart/:id/items  → all SKUs in cart with pricing
+────────────────────────────────────────────── */
+app.get('/api/cart/:id/items', async (req, res) => {
+  const db = await getDB();
+  const cartId = +req.params.id;
+  const rows = await db.all(`
+    SELECT c.SKUID, s.Name, c.Qty, s.Price,
+           (c.Qty*s.Price) AS lineTotal, s.Picture
+      FROM CARTPRODUCTS c
+      JOIN SKU s ON s.SKUID = c.SKUID
+     WHERE c.CartID = ?
+  `, cartId);
+  res.json(rows);
 });
 
   // ───── Start server ───────────────────────────────────────
