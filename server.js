@@ -118,27 +118,38 @@ app.post('/api/cart', async (req, res) => {
    POST /api/cart/:id/items   { skuId, qty }
 ────────────────────────────────────────────── */
 app.post('/api/cart/:id/items', async (req, res) => {
-  const db    = await getDB();
+  const db     = await getDB();
   const cartId = +req.params.id;
-  const { skuId, qty = 1 } = req.body || {};
+  let   { skuId, qty = 1 } = req.body || {};
 
-  // upsert line-item
+  qty = +qty;                     // make sure it’s a number
+  if (!skuId || !qty) return res.sendStatus(400);
+
+  /* 1️⃣  up-insert the delta (qty may be +1 or -1) */
   await db.run(`
-    INSERT INTO CARTPRODUCTS (CartID, SKUID, Qty)
-         VALUES (?,?,?)
-    ON CONFLICT (CartID,SKUID)
-       DO UPDATE SET Qty = Qty + excluded.Qty
+       INSERT INTO CARTPRODUCTS (CartID, SKUID, Qty)
+            VALUES (?,?,?)
+       ON CONFLICT (CartID,SKUID)
+          DO UPDATE SET Qty = Qty + excluded.Qty
   `, cartId, skuId, qty);
 
-  // return new total
+  /* 2️⃣  if the new quantity became ≤0 drop the line */
+  await db.run(`
+       DELETE FROM CARTPRODUCTS
+        WHERE CartID = ? AND SKUID = ? AND Qty <= 0
+  `, cartId, skuId);
+
+  /* 3️⃣  return the new total quantity for the badge   */
   const { total } = await db.get(
     `SELECT COALESCE(SUM(Qty),0) AS total
        FROM CARTPRODUCTS
-      WHERE CartID=?`,
+      WHERE CartID = ?`,
     cartId
   );
+
   res.json({ totalQty: total });
 });
+
 
 /* ─────────────────────────────────────────────
    GET /api/cart/:id/items  → all SKUs in cart with pricing

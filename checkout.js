@@ -1,44 +1,54 @@
+/* checkout.js – show current cart and totals on checkout.html */
 
-let listCart = [];
-function checkCart(){
-        var cookieValue = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('listCart='));
-        if(cookieValue){
-            listCart = JSON.parse(cookieValue.split('=')[1]);
-        }
-}
-checkCart();
-addCartToHTML();
-function addCartToHTML(){
-    // clear data default
-    let listCartHTML = document.querySelector('.returnCart .list');
-    listCartHTML.innerHTML = '';
+const listEl   = document.querySelector('.returnCart .list');
+const qtyEl    = document.querySelector('.totalQuantity');
+const priceEl  = document.querySelector('.totalPrice');
 
-    let totalQuantityHTML = document.querySelector('.totalQuantity');
-    let totalPriceHTML = document.querySelector('.totalPrice');
-    let totalQuantity = 0;
-    let totalPrice = 0;
-    // if has product in Cart
-    if(listCart){
-        listCart.forEach(product => {
-            if(product){
-                let newCart = document.createElement('div');
-                newCart.classList.add('item');
-                newCart.innerHTML = 
-                    `<img src="${product.image}">
-                    <div class="info">
-                        <div class="name">${product.name}</div>
-                        <div class="price">$${product.price}/1 product</div>
-                    </div>
-                    <div class="quantity">${product.quantity}</div>
-                    <div class="returnPrice">$${product.price * product.quantity}</div>`;
-                listCartHTML.appendChild(newCart);
-                totalQuantity = totalQuantity + product.quantity;
-                totalPrice = totalPrice + (product.price * product.quantity);
-            }
-        })
+loadCheckout();
+
+/* ─────────────────────────────────────────────── */
+async function loadCheckout () {
+  const cartId = localStorage.getItem('cartId');
+  if (!cartId) {
+    listEl.innerHTML = '<p style="padding:1rem">Your cart is empty.</p>';
+    qtyEl.textContent   = '0';
+    priceEl.textContent = '$0';
+    return;
+  }
+
+  try {
+    const rows = await fetch(`/api/cart/${cartId}/items`).then(r => r.json());
+
+    if (!rows.length) {
+      listEl.innerHTML = '<p style="padding:1rem">Your cart is empty.</p>';
+      qtyEl.textContent   = '0';
+      priceEl.textContent = '$0';
+      return;
     }
-    totalQuantityHTML.innerText = totalQuantity;
-    totalPriceHTML.innerText = '$' + totalPrice;
+
+    let totalQty = 0;
+    let totalPrice = 0;
+    const html = rows.map(r => {
+      totalQty   += r.Qty;
+      totalPrice += r.lineTotal;
+      return `
+        <div class="item">
+          <img src="${r.Picture}">
+          <div class="info">
+            <div class="name">${r.Name}</div>
+            <div class="price">$${r.Price} / item</div>
+          </div>
+          <div class="quantity">${r.Qty}</div>
+          <div class="returnPrice">$${r.lineTotal.toFixed(2)}</div>
+        </div>`;
+    }).join('');
+
+    listEl.innerHTML   = html;
+    qtyEl.textContent   = totalQty;
+    priceEl.textContent = '$' + totalPrice.toFixed(2);
+
+  } catch (err) {
+    console.error('Checkout load error', err);
+    listEl.innerHTML = '<p style="padding:1rem;color:red">Can’t load cart.</p>';
+  }
 }
