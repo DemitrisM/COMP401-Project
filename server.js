@@ -101,10 +101,15 @@ app.get('/api/products', async (_req, res) => {
 ────────────────────────────────────────────── */
 app.post('/api/cart', async (req, res) => {
   const db = await getDB();
-  const { userId = null } = req.body || {};
-  const x   = await db.run(
+
+  /* 1️⃣  pick a valid UserID:
+        – if client sent one -> use it
+        – otherwise fall back to *demo/guest* user with id 1              */
+  const uid = req.body?.userId ?? 1;          // ← Just one added line!
+
+  const x = await db.run(
     `INSERT INTO CARTS (UserID) VALUES (?)`,
-    userId
+    uid
   );
   res.status(201).json({ cartId: x.lastID });
 });
@@ -139,17 +144,31 @@ app.post('/api/cart/:id/items', async (req, res) => {
    GET /api/cart/:id/items  → all SKUs in cart with pricing
 ────────────────────────────────────────────── */
 app.get('/api/cart/:id/items', async (req, res) => {
-  const db = await getDB();
+  const db     = await getDB();
   const cartId = +req.params.id;
-  const rows = await db.all(`
-    SELECT c.SKUID, s.Name, c.Qty, s.Price,
-           (c.Qty*s.Price) AS lineTotal, s.Picture
-      FROM CARTPRODUCTS c
-      JOIN SKU s ON s.SKUID = c.SKUID
-     WHERE c.CartID = ?
-  `, cartId);
-  res.json(rows);
+
+  try {
+    const rows = await db.all(`
+      SELECT
+          c.SKUID,
+          p.Name,                    -- ← pull the product name from PRODUCTS
+          c.Qty,
+          s.Price,
+          (c.Qty * s.Price) AS lineTotal,
+          '/images/' || s.Picture    AS Picture
+      FROM   CARTPRODUCTS  c
+      JOIN   SKU           s ON s.SKUID  = c.SKUID
+      JOIN   PRODUCTS      p ON p.ProdID = s.ProdID
+      WHERE  c.CartID = ?
+    `, cartId);
+
+    res.json(rows);
+  } catch (err) {
+    console.error('Cart query error\n', err);
+    res.sendStatus(500);
+  }
 });
+
 
   // ───── Start server ───────────────────────────────────────
   const PORT = process.env.PORT || 3000;
