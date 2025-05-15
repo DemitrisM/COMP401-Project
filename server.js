@@ -77,20 +77,23 @@ app.post('/login', async (req, res) => {
   res.json({ role: user.Role, username: user.Username });
 });
 
-/* GET /api/products */
+/* GET /api/products  –  1 row per visible title */
 app.get('/api/products', async (_req, res) => {
   const rows = await db.all(`
-    SELECT SKUID,
-           Name,
-           Price,
-           '/images/' || Picture AS Picture,   -- ← prepend folder
-           Description
-    FROM   SKU
-    JOIN   PRODUCTS USING (ProdID)
-    ORDER  BY SKUID
+    SELECT
+        MIN(s.SKUID)                AS SKUID,      -- a stable representative
+        p.Name,
+        MIN(s.Price)                AS Price,      -- choose cheapest variant
+        MIN('/images/'||s.Picture)  AS Picture,    -- any picture will do
+        MIN(s.Description)          AS Description
+    FROM   PRODUCTS p
+    JOIN   SKU      s  ON s.ProdID = p.ProdID
+    GROUP  BY p.Name                              -- ★ collapse the triples
+    ORDER  BY p.Name
   `);
   res.json(rows);
 });
+
 
 
 /* ─────────────────────────────────────────────

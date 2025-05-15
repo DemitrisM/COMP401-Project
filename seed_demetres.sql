@@ -1,88 +1,68 @@
+PRAGMA foreign_keys = ON;
 BEGIN TRANSACTION;
 
-/* -----------------------------------------------------------
-   1. Seller account  (only added if it doesn't already exist)
-      Password "1234" hashed with bcrypt cost 10
-      (hash generated once; server bcrypt.compare will validate)
------------------------------------------------------------ */
-INSERT INTO USERS (Email,Password,Username,Role)
-SELECT 'demetresmavridi@gmail.com',
-       '$2b$10$wqH4hWcnnr5lTyBC0b.poewT9DW0h6IcjjZI2PH1PtaP6sJT9kK8e', -- pw=1234
-       'Demetres',
-       'SELLER'
-WHERE NOT EXISTS (
-  SELECT 1 FROM USERS WHERE Email='demetresmavridi@gmail.com'
-);
+/*-----------------------------------------------------------------
+1) Make sure the existing account is a SELLER
+------------------------------------------------------------------*/
+UPDATE USERS
+   SET Role = 'SELLER'
+ WHERE Email = 'demetresmavridi@gmail.com';
 
-/* Capture this SellerID (whether newly inserted or pre-existing) */
-WITH s AS (
-  SELECT UserID AS SellerID
-    FROM USERS
-   WHERE Email='demetresmavridi@gmail.com'
-)
+/*-----------------------------------------------------------------
+2) Insert the eight products for that seller
+------------------------------------------------------------------*/
+INSERT INTO PRODUCTS (SellerID ,Name                        ,Category)
+SELECT UserID,'Wall sconce'             ,'Lighting'   FROM USERS WHERE Email='demetresmavridi@gmail.com'
+UNION ALL
+SELECT UserID,'Square planter'          ,'Garden'     FROM USERS WHERE Email='demetresmavridi@gmail.com'
+UNION ALL
+SELECT UserID,'Ivy fridge magnet'       ,'Kitchen'    FROM USERS WHERE Email='demetresmavridi@gmail.com'
+UNION ALL
+SELECT UserID,'Monstera coasters'       ,'Home décor' FROM USERS WHERE Email='demetresmavridi@gmail.com'
+UNION ALL
+SELECT UserID,'Trellis storage system'  ,'Storage'    FROM USERS WHERE Email='demetresmavridi@gmail.com'
+UNION ALL
+SELECT UserID,'Planet lamp'             ,'Lighting'   FROM USERS WHERE Email='demetresmavridi@gmail.com'
+UNION ALL
+SELECT UserID,'Dragon controller holder','Gadgets'    FROM USERS WHERE Email='demetresmavridi@gmail.com'
+UNION ALL
+SELECT UserID,'Tissue box cover'        ,'Bathroom'   FROM USERS WHERE Email='demetresmavridi@gmail.com';
 
-/* -----------------------------------------------------------
-   2. PRODUCT rows (if not already present)
------------------------------------------------------------ */
-INSERT INTO PRODUCTS (SellerID, Name, Category)
-SELECT SellerID, 'Wall Sconce',            'Lighting'       FROM s
-WHERE NOT EXISTS (SELECT 1 FROM PRODUCTS WHERE Name='Wall Sconce')
+/*-----------------------------------------------------------------
+3) One SKU row per product (match on Name + SellerID)
+------------------------------------------------------------------*/
+INSERT INTO SKU (ProdID,Colour,Price,Description,Picture)
+SELECT p.ProdID,NULL,24.99,'Elegant wall sconce for a stylish and modern home.','Wall_lamp.png'
+  FROM PRODUCTS p
+  JOIN USERS u ON u.UserID = p.SellerID
+ WHERE p.Name='Wall sconce'            AND u.Email='demetresmavridi@gmail.com'
 UNION ALL
-SELECT SellerID, 'Square Planter',         'Home Decor'     FROM s
-WHERE NOT EXISTS (SELECT 1 FROM PRODUCTS WHERE Name='Square Planter')
+SELECT p.ProdID,NULL,18.50,'Modern square planter for any home.','Square_planter.png'
+  FROM PRODUCTS p JOIN USERS u ON u.UserID=p.SellerID
+ WHERE p.Name='Square planter'         AND u.Email='demetresmavridi@gmail.com'
 UNION ALL
-SELECT SellerID, 'Ivy Fridge Magnets',     'Kitchen'        FROM s
-WHERE NOT EXISTS (SELECT 1 FROM PRODUCTS WHERE Name='Ivy Fridge Magnets')
+SELECT p.ProdID,NULL, 6.95,'Ivy and flower magnets for your fridge.','Fridge_Magnets.png'
+  FROM PRODUCTS p JOIN USERS u ON u.UserID=p.SellerID
+ WHERE p.Name='Ivy fridge magnet'      AND u.Email='demetresmavridi@gmail.com'
 UNION ALL
-SELECT SellerID, 'Monstera Coasters',      'Kitchen'        FROM s
-WHERE NOT EXISTS (SELECT 1 FROM PRODUCTS WHERE Name='Monstera Coasters')
+SELECT p.ProdID,NULL,15.00,'Monstera plant with a hidden coaster set.','Coaster.png'
+  FROM PRODUCTS p JOIN USERS u ON u.UserID=p.SellerID
+ WHERE p.Name='Monstera coasters'      AND u.Email='demetresmavridi@gmail.com'
 UNION ALL
-SELECT SellerID, 'Trellis Storage System', 'Organization'   FROM s
-WHERE NOT EXISTS (SELECT 1 FROM PRODUCTS WHERE Name='Trellis Storage System')
+SELECT p.ProdID,NULL,129.90,'Wall storage system with lots of accessories.','Trellis.png'
+  FROM PRODUCTS p JOIN USERS u ON u.UserID=p.SellerID
+ WHERE p.Name='Trellis storage system' AND u.Email='demetresmavridi@gmail.com'
 UNION ALL
-SELECT SellerID, 'Planet Lamps',           'Lighting'       FROM s
-WHERE NOT EXISTS (SELECT 1 FROM PRODUCTS WHERE Name='Planet Lamps')
+SELECT p.ProdID,NULL,39.90,'A unique 3-D printed planet lamp.','Planets.png'
+  FROM PRODUCTS p JOIN USERS u ON u.UserID=p.SellerID
+ WHERE p.Name='Planet lamp'            AND u.Email='demetresmavridi@gmail.com'
 UNION ALL
-SELECT SellerID, 'Dragon Controller Holder','Gaming'        FROM s
-WHERE NOT EXISTS (SELECT 1 FROM PRODUCTS WHERE Name='Dragon Controller Holder')
+SELECT p.ProdID,NULL,29.99,'Auto-locking dragon controller holder.','Holder.png'
+  FROM PRODUCTS p JOIN USERS u ON u.UserID=p.SellerID
+ WHERE p.Name='Dragon controller holder' AND u.Email='demetresmavridi@gmail.com'
 UNION ALL
-SELECT SellerID, 'Tissue Box Cover',       'Kids/Decor'     FROM s
-WHERE NOT EXISTS (SELECT 1 FROM PRODUCTS WHERE Name='Tissue Box Cover');
-
-/* -----------------------------------------------------------
-   3. SKU rows for each product (insert only if missing)
------------------------------------------------------------ */
-INSERT INTO SKU (ProdID, Colour, Price, Description, Picture)
-SELECT ProdID, 'White', 89.00, 'Elegant wall sconce','images/Wall_lamp.png'
-  FROM PRODUCTS WHERE Name='Wall Sconce'
-  AND NOT EXISTS (SELECT 1 FROM SKU WHERE ProdID = PRODUCTS.ProdID)
-UNION ALL
-SELECT ProdID, 'Grey', 49.00, 'Modern square planter','images/Square_planter.png'
-  FROM PRODUCTS WHERE Name='Square Planter'
-  AND NOT EXISTS (SELECT 1 FROM SKU WHERE ProdID = PRODUCTS.ProdID)
-UNION ALL
-SELECT ProdID, NULL, 19.00, 'Ivy & flower fridge magnets','images/Fridge_Magnets.png'
-  FROM PRODUCTS WHERE Name='Ivy Fridge Magnets'
-  AND NOT EXISTS (SELECT 1 FROM SKU WHERE ProdID = PRODUCTS.ProdID)
-UNION ALL
-SELECT ProdID, NULL, 35.00, 'Monstera plant coaster set','images/Coaster.png'
-  FROM PRODUCTS WHERE Name='Monstera Coasters'
-  AND NOT EXISTS (SELECT 1 FROM SKU WHERE ProdID = PRODUCTS.ProdID)
-UNION ALL
-SELECT ProdID, NULL, 120.00,'Wall storage system with accessories','images/Trellis.png'
-  FROM PRODUCTS WHERE Name='Trellis Storage System'
-  AND NOT EXISTS (SELECT 1 FROM SKU WHERE ProdID = PRODUCTS.ProdID)
-UNION ALL
-SELECT ProdID, NULL, 75.00,'Set of unique planet lamps','images/Planets.png'
-  FROM PRODUCTS WHERE Name='Planet Lamps'
-  AND NOT EXISTS (SELECT 1 FROM SKU WHERE ProdID = PRODUCTS.ProdID)
-UNION ALL
-SELECT ProdID, NULL, 59.00,'Auto-locking dragon controller holder','images/Holder.png'
-  FROM PRODUCTS WHERE Name='Dragon Controller Holder'
-  AND NOT EXISTS (SELECT 1 FROM SKU WHERE ProdID = PRODUCTS.ProdID)
-UNION ALL
-SELECT ProdID, NULL, 27.00,'Whale-inspired tissue box cover','images/Tissue_holder.png'
-  FROM PRODUCTS WHERE Name='Tissue Box Cover'
-  AND NOT EXISTS (SELECT 1 FROM SKU WHERE ProdID = PRODUCTS.ProdID);
+SELECT p.ProdID,NULL,12.00,'Whale-inspired tissue box cover for kids.','Tissue_holder.png'
+  FROM PRODUCTS p JOIN USERS u ON u.UserID=p.SellerID
+ WHERE p.Name='Tissue box cover'       AND u.Email='demetresmavridi@gmail.com';
 
 COMMIT;
