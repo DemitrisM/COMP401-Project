@@ -268,7 +268,7 @@ body {
 .listProduct .item{position:relative;}
 .listProduct .item img{
   width:101%;
-  height:430px;
+  height:300px;
   object-fit:fill;
 }
 .listProduct .item h2{
@@ -337,8 +337,9 @@ body {
   color: white;
 }
 .cart .buttons .checkout{
-  background:#E8BC0E;
+  background:#e6572c;
   color:#000;
+
 }
 
 .cart .listCart{
