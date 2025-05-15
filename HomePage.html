@@ -33,13 +33,14 @@
         <i class="bi bi-cart3 cart-icon"></i>
         <div class="totalQuantity">0</div>
       </button>
+
       <div class="nav-buttons">
         <a href="LoginPage.html" class="btn signup-btn" id="signupTrigger">Log In</a>
       </div>
     </div>
   </header>
 
-  <!-- ─── Top-Seller Carousel ────────────────────────────────── -->
+  <!-- ─── Top-Seller Carousel (static demo) ───────────────────── -->
   <section class="top-seller">
     <h2>Top Seller</h2>
     <div class="carousel-container">
@@ -49,61 +50,61 @@
 
       <div class="carousel-wrapper">
         <div class="carousel">
-          <!-- eight example cards -->
+          <!-- eight hard-coded showcase cards -->
           <div class="card">
-            <img src="images/Wall_lamp.png" alt="Product 1" />
+            <img src="images/Wall_lamp.png" alt="Wall sconce" />
             <div class="card-info">
               <h3>Wall sconce</h3>
               <p class="card-desc">Elegant wall sconce for a stylish and modern home.</p>
             </div>
           </div>
           <div class="card">
-            <img src="images/Square_planter.png" alt="Product 2" />
+            <img src="images/Square_planter.png" alt="Square Planter" />
             <div class="card-info">
               <h3>Square Planter</h3>
-              <p class="card-desc">Modern square planter for any home</p>
+              <p class="card-desc">Modern square planter for any home.</p>
             </div>
           </div>
           <div class="card">
-            <img src="images/Fridge_Magnets.png" alt="Product 3" />
+            <img src="images/Fridge_Magnets.png" alt="Ivy Fridge Magnet" />
             <div class="card-info">
               <h3>Ivy Fridge Magnet - Flower Magnets</h3>
-              <p class="card-desc">Ivy and flower magnets for your fridge</p>
+              <p class="card-desc">Ivy and flower magnets for your fridge.</p>
             </div>
           </div>
           <div class="card">
-            <img src="images/Coaster.png" alt="Product 4" />
+            <img src="images/Coaster.png" alt="Monstera Coasters" />
             <div class="card-info">
               <h3>Monstera Coasters</h3>
-              <p class="card-desc">Monstera plant with a lot of hidden coasters</p>
+              <p class="card-desc">Monstera plant with a lot of hidden coasters.</p>
             </div>
           </div>
           <div class="card">
-            <img src="images/Trellis.png" alt="Product 5" />
+            <img src="images/Trellis.png" alt="Trellis storage system" />
             <div class="card-info">
               <h3>Trellis storage system</h3>
-              <p class="card-desc">Wall storage system with lots of accessories</p>
+              <p class="card-desc">Wall storage system with lots of accessories.</p>
             </div>
           </div>
           <div class="card">
-            <img src="images/Planets.png" alt="Product 6" />
+            <img src="images/Planets.png" alt="Planet Lamps" />
             <div class="card-info">
               <h3>Planet Lamps</h3>
-              <p class="card-desc">Unique planet lamps</p>
+              <p class="card-desc">Unique planet lamps.</p>
             </div>
           </div>
           <div class="card">
-            <img src="images/Holder.png" alt="Product 7" />
+            <img src="images/Holder.png" alt="Dragon Controller Holder" />
             <div class="card-info">
               <h3>Dragon Controller Holder</h3>
-              <p class="card-desc">Unique controller holder with auto-locking mechanisms</p>
+              <p class="card-desc">Unique controller holder with auto-locking mechanisms.</p>
             </div>
           </div>
           <div class="card">
-            <img src="images/Tissue_holder.png" alt="Product 8" />
+            <img src="images/Tissue_holder.png" alt="Tissue box cover" />
             <div class="card-info">
               <h3>Tissue box cover</h3>
-              <p class="card-desc">Whale-inspired tissue box cover for kids</p>
+              <p class="card-desc">Whale-inspired tissue box cover for kids.</p>
             </div>
           </div>
         </div>
@@ -115,127 +116,35 @@
     </div>
   </section>
 
-  <!-- ─── Product Catalogue ──────────────────────────────────── -->
+  <!-- ─── Product Catalogue (filled by JS) ────────────────────── -->
   <div class="container">
-    <header>
-      <h1>LIST PRODUCT</h1>
-      
-    </header>
-
-    <div class="listProduct">
-      <div class="item">
-        <img src="images/Trellis.png" alt="">
-       <h2><a href="#" class="product-link">CoPilot / Black / Automatic</a></h2> 
-        <div class="price">$550</div>
-        <button>Add To Cart</button>
-      </div>
-      <!-- ───────── ADD these 10 cards inside .listProduct ───────── -->
-<div class="item">
-  <img src="images/Wall_lamp.png" alt="Wall sconce" id="1">
-  <h2><a href="#" class="product-link">Wall Sconce</a></h2>
-  <div class="price">$89</div>
-  <button>Add To Cart</button>
-</div>
-
-<div class="item">
-  <img src="images/Square_planter.png" alt="Square Planter">
-  <h2><a href="#" class="product-link">Square Planter</a></h2>
-  <div class="price">$49</div>
-  <button>Add To Cart</button>
-</div>
-
-<div class="item">
-  <img src="images/Fridge_Magnets.png" alt="Ivy Fridge Magnets">
-  <h2><a href="#" class="product-link">Ivy Fridge Magnets</a></h2>
-  <div class="price">$19</div>
-  <button>Add To Cart</button>
-</div>
-
-<div class="item">
-  <img src="images/Coaster.png" alt="Monstera Coasters">
-  <h2><a href="#" class="product-link">Monstera Coasters</a></h2>
-  <div class="price">$35</div>
-  <button>Add To Cart</button>
-</div>
-
-<div class="item">
-    <img src="images/Trellis.png" alt="Trellis storage system">
-    <h2><a href="#" class="product-link">Trellis storage system</a></h2>
-    <div class="price">$120</div>
-    <button>Add To Cart</button>
+    <header><h1>ALL PRODUCTS</h1></header>
+    <div class="listProduct" id="catalogue"><!-- JS injects cards here --></div>
   </div>
 
-<div class="item">
-    <img src="images/Planets.png" alt="Planet Lamps">
-    <h2><a href="#" class="product-link">Planet Lamps</a></h2>
-    <div class="price">$75</div>
-    <button>Add To Cart</button>
-  </div>
+  <!-- hidden template that JS clones -->
+  <template id="productCard">
+    <div class="item">
+      <img src="" alt="">
+      <h2><a class="product-link" href="#"></a></h2>
+      <div class="price"></div>
+      <button>Add To Cart</button>
+    </div>
+  </template>
 
-<div class="item">
-    <img src="images/Holder.png" alt="Dragon Controller Holder">
-    <h2><a href="#" class="product-link">Dragon Controller Holder</a></h2>
-    <div class="price">$59</div>
-    <button>Add To Cart</button>
-  </div>
-
-<div class="item">
-    <img src="images/Tissue_holder.png" alt="Tissue Box Cover">
-    <h2><a href="#" class="product-link">Tissue Box Cover</a></h2>
-    <div class="price">$27</div>
-    <button>Add To Cart</button>
-  </div>
-
-<div class="item">
-    <img src="images/web.png" alt="Carbon-Fiber Watch Band">
-    <h2><a href="#" class="product-link">Carbon-Fiber Watch Band</a></h2>
-    <div class="price">$42</div>
-    <button>Add To Cart</button>
-  </div>
-
-<div class="item">
-    <img src="images/web.png" alt="Minimal Desk Clock">
-    <h2><a href="#" class="product-link">Minimal Desk Clock</a></h2>
-    <div class="price">$38</div>
-    <button>Add To Cart</button>
-  </div>
-<!-- ───────── END of added cards ───────── -->
-
+  <!-- ─── Cart Drawer (simplified, stays as before) ───────────── -->
+  <div class="cart">
+    <h2>CART</h2>
+    <div class="listCart"><!-- filled by cartdrawer.js --></div>
+    <div class="buttons">
+      <div class="close">CLOSE</div>
+      <div class="checkout"><a href="checkout.html" style="color:white";>CHECKOUT</a></div>
     </div>
   </div>
 
-  <!-- ─── Hero Section (optional) ─────────────────────────────── -->
-  <main class="hero">
-    <!-- hero content here -->
-  </main>
-
-  <div class="cart">
-      <h2>CART</h2>
-
-      <div class="listCart">
-        <!-- items will be injected by app.js -->
-        <div class="item">
-          <img src="images/Coaster.png" alt="">
-          <div class="content">
-            <div class="name">CoPilot / Black / Automatic</div>
-            <div class="price">$550 / 1 product</div>
-          </div>
-          <div class="quantity">
-            <button>-</button>
-            <span class="value">3</span>
-            <button>+</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="buttons">
-        <div class="close">CLOSE</div>
-        <div class="checkout"><a href="checkout.html">CHECKOUT</a></div>
-      </div>
-  </div>
   <!-- ─── Scripts ─────────────────────────────────────────────── -->
   <script src="carousel.js"></script>
   <script src="home.js"></script>
-  <script  defer src="cartdrawer.js"></script>
+  <script defer src="cartdrawer.js"></script>
 </body>
 </html>
