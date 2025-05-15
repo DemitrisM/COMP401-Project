@@ -131,7 +131,7 @@ COMMIT;
 node server.js
 ```
 
-Visit: [http://localhost:3000](http://localhost:3000)
+Visit: [[http://localhost:3000/SignUpPage.html](http://localhost:3000/SignUpPage.html)
 
 ---
 
