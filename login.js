@@ -1,4 +1,5 @@
-// login.js – verify credentials against back-end
+/* login.js – verify credentials, remember session, redirect home */
+
 const form    = document.getElementById('loginForm');
 const errorEl = document.getElementById('errorMsg');
 
@@ -6,8 +7,8 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   errorEl.textContent = '';
 
-  // Collect form data into an object
-  const dto = Object.fromEntries(new FormData(form).entries()); // {email, password}
+  // collect {email, password}
+  const dto = Object.fromEntries(new FormData(form).entries());
 
   try {
     const res = await fetch('/login', {
@@ -16,14 +17,22 @@ form.addEventListener('submit', async (e) => {
       body   : JSON.stringify(dto)
     });
 
-    if (res.ok) {
-      /* optionally store session info here:
-         localStorage.setItem('role', (await res.json()).role); */
-      window.location.href = 'HomePage.html';
-    } else {
+    if (!res.ok) {
       errorEl.textContent = 'Invalid e-mail or password.';
+      return;
     }
-  } catch {
+
+    /* ───── success ─────────────────────────────────────────── */
+    const { username, role } = await res.json();
+
+    // very simple “session” – enough for navbar swapping
+    localStorage.setItem('loggedIn', 'true');
+    localStorage.setItem('username',  username);   // optional, future use
+    localStorage.setItem('role',      role);       // optional, future use
+
+    window.location.href = 'HomePage.html';        // back to catalogue
+  }
+  catch {
     errorEl.textContent = 'Network error – please try again.';
   }
 });
