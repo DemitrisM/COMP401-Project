@@ -3,7 +3,6 @@ let cart = document.querySelector('.cart');
 let container = document.querySelector('.container');
 let close = document.querySelector('.close');
 const cartButtons = document.querySelectorAll( '.cart-btn');
-
 const cartDrawer  = document.querySelector('.cart');
 const closeBtn    = document.querySelector('.close');
 

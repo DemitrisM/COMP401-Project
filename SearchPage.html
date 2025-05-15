@@ -72,13 +72,28 @@
     </div>
     <button class="add-to-cart">Add to Cart</button>
   </div>
-
-  
-  
- 
 </div>
 
+<!-- ─── Trigger (in the navbar) ─────────────────────────── -->
 
+
+<!-- ─── Drawer itself ────────────────────────────────────── -->
+<div class="cart">
+  <h2>CART</h2>
+
+  <!-- items get injected here by JS -->
+  <div class="listCart"></div>
+
+  <div class="buttons">
+    <div class="close">CLOSE</div>
+    <div class="checkout">
+      <a href="checkout.html" style="color:white;">CHECKOUT</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── Drawer logic (JS import) ─────────────────────────── -->
+<script defer src="cartdrawer.js"></script>
 
 </body>
 </html>

@@ -12,7 +12,10 @@ body{
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: lightsteelblue
+    background: linear-gradient(270deg, #728fbc, lightsteelblue, #575757);
+    background-size: 600% 600%;
+    background-position: center;
+    animation: gradientMove 10s ease infinite;
 }
 
 .container{
@@ -178,4 +181,9 @@ width: 100%;
     background: transparent;
     border: 2px solid white;
     box-shadow: none;
+}
+@keyframes gradientMove{
+  0%   { background-position:0%   50%; }
+  50%  { background-position:100% 50%; }
+  100% { background-position:0%   50%; }
 }

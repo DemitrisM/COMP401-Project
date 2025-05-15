@@ -201,3 +201,103 @@ body {
   max-width: 100%;
   line-height: 1.4;
 }
+/* ─── Drawer trigger in the navbar ───────────────────── */
+.cart-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.cart-icon {
+  font-size: 1.56rem;
+  color: #000;
+  line-height: 1;
+}
+
+/* ─── Cart drawer panel ──────────────────────────────── */
+.cart {
+  position: fixed;
+  top: 0;
+  right: -100%;              /* hidden off-screen by default */
+  width: 400px;
+  max-width: 80vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 50px 1fr 50px;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.12); /* frosted glass */
+  backdrop-filter: blur(12px);
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.25);
+  color: black;
+  transition: right 1s;       /* slide-in animation */
+  z-index: 9999;
+}
+
+.cart.open {                 /* JS toggles this class */
+  right: 0;                  /* slide drawer into view */
+}
+
+.cart h2 {
+  color: black;
+  padding: 20px;
+  margin: 0;
+}
+
+/* ─── Drawer content area ────────────────────────────── */
+.cart .listCart {
+  padding: 20px;
+  overflow: auto;
+}
+.cart .listCart::-webkit-scrollbar { width: 0; }
+
+.cart .listCart .item {
+  display: grid;
+  grid-template-columns: 50px 1fr 70px;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cart .listCart img {
+  width: 100%;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.cart .name { font-weight: bold; }
+
+.cart .quantity {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.cart .quantity span {
+  width: 50px;
+  text-align: center;
+}
+
+/* ─── Bottom buttons (CLOSE / CHECKOUT) ──────────────── */
+.cart .buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  text-align: center;
+}
+
+.cart .buttons div {
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+}
+
+.cart .buttons .checkout {
+  background: #e6572c;   /* orange checkout button */
+  color: #000;
+}

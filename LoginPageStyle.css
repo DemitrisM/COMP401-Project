@@ -21,19 +21,19 @@ h1{
 }
 
 body{
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: lightsteelblue;
-    background-size: cover;
+    background: linear-gradient(270deg, #728fbc, lightsteelblue, #575757);
+    background-size: 600% 600%;
     background-position: center;
-   
+    animation: gradientMove 10s ease infinite;
 }
 
 .wrapper{
     width: 420px;
-    background: grey;
+    background: #908f8f;
     border: 2px solid rgba(255,255,255,0.2);
     backdrop-filter: blur(20px);
     border-radius: 10px;
@@ -139,4 +139,14 @@ body{
     margin-top:-10px;
     height:20px;          /* keeps layout stable */
   }
-  
+  @keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
