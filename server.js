@@ -10,10 +10,12 @@ const bcrypt   = require('bcrypt');
 const sqlite3  = require('sqlite3');
 const { open } = require('sqlite');
 
+
 // ──────────────────────────────────────────────────────────────
 // Helper: absolute path to this folder
 // ──────────────────────────────────────────────────────────────
 const ROOT = __dirname;           // e.g. /home/.../COMP401-Project
+
 
 // ──────────────────────────────────────────────────────────────
 // Async IIFE so we can use await
@@ -33,10 +35,6 @@ const ROOT = __dirname;           // e.g. /home/.../COMP401-Project
       (html, css, js, images, etc.)
   */
   app.use(express.static(ROOT));            // ← key change
-
-  // OPTIONAL: if you keep images in /images sub-folder, the line above
-  // already serves them, but you can also be explicit:
-  // app.use('/images', express.static(path.join(ROOT, 'images')));
 
   // ───── POST /signup  (buyers + sellers) ────────────────────
   app.post('/signup', async (req, res) => {
@@ -60,126 +58,138 @@ const ROOT = __dirname;           // e.g. /home/.../COMP401-Project
     res.sendStatus(201);
   });
 
-  // ─── LOGIN route ─────────────────────────────────────────────
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body || {};
-  if (!email || !password) return res.status(400).send('Bad request');
+  // ─── LOGIN route ────────────────────────────────────────────
+  app.post('/login', async (req, res) => {
+    const { email, password } = req.body || {};
+    if (!email || !password) return res.status(400).send('Bad request');
 
-  // fetch user row
-  const user = await db.get('SELECT * FROM USERS WHERE Email = ?', email.trim());
-  if (!user) return res.sendStatus(401); // unknown e-mail
+    // fetch user row
+    const user = await db.get('SELECT * FROM USERS WHERE Email = ?', email.trim());
+    if (!user) return res.sendStatus(401); // unknown e-mail
 
-  // compare hashed password
-  const ok = await bcrypt.compare(password, user.Password);
-  if (!ok) return res.sendStatus(401);
+    // compare hashed password
+    const ok = await bcrypt.compare(password, user.Password);
+    if (!ok) return res.sendStatus(401);
 
-  // success – you could generate a token or just reply 200
-  res.json({ role: user.Role, username: user.Username });
-});
+    // success – return role & username
+    res.json({ role: user.Role, username: user.Username });
+  });
 
-/* GET /api/products  –  1 row per visible title */
-app.get('/api/products', async (_req, res) => {
-  const rows = await db.all(`
-    SELECT
-        MIN(s.SKUID)                AS SKUID,      -- a stable representative
-        p.Name,
-        MIN(s.Price)                AS Price,      -- choose cheapest variant
-        MIN('/images/'||s.Picture)  AS Picture,    -- any picture will do
-        MIN(s.Description)          AS Description
-    FROM   PRODUCTS p
-    JOIN   SKU      s  ON s.ProdID = p.ProdID
-    GROUP  BY p.Name                              -- ★ collapse the triples
-    ORDER  BY p.Name
-  `);
-  res.json(rows);
-});
-
-
-
-/* ─────────────────────────────────────────────
-   POST /api/cart           { userId? } → returns cartId
-────────────────────────────────────────────── */
-app.post('/api/cart', async (req, res) => {
-  const db = await getDB();
-
-  /* 1️⃣  pick a valid UserID:
-        – if client sent one -> use it
-        – otherwise fall back to *demo/guest* user with id 1              */
-  const uid = req.body?.userId ?? 1;          // ← Just one added line!
-
-  const x = await db.run(
-    `INSERT INTO CARTS (UserID) VALUES (?)`,
-    uid
-  );
-  res.status(201).json({ cartId: x.lastID });
-});
-
-/* ─────────────────────────────────────────────
-   POST /api/cart/:id/items   { skuId, qty }
-────────────────────────────────────────────── */
-app.post('/api/cart/:id/items', async (req, res) => {
-  const db     = await getDB();
-  const cartId = +req.params.id;
-  let   { skuId, qty = 1 } = req.body || {};
-
-  qty = +qty;                     // make sure it’s a number
-  if (!skuId || !qty) return res.sendStatus(400);
-
-  /* 1️⃣  up-insert the delta (qty may be +1 or -1) */
-  await db.run(`
-       INSERT INTO CARTPRODUCTS (CartID, SKUID, Qty)
-            VALUES (?,?,?)
-       ON CONFLICT (CartID,SKUID)
-          DO UPDATE SET Qty = Qty + excluded.Qty
-  `, cartId, skuId, qty);
-
-  /* 2️⃣  if the new quantity became ≤0 drop the line */
-  await db.run(`
-       DELETE FROM CARTPRODUCTS
-        WHERE CartID = ? AND SKUID = ? AND Qty <= 0
-  `, cartId, skuId);
-
-  /* 3️⃣  return the new total quantity for the badge   */
-  const { total } = await db.get(
-    `SELECT COALESCE(SUM(Qty),0) AS total
-       FROM CARTPRODUCTS
-      WHERE CartID = ?`,
-    cartId
-  );
-
-  res.json({ totalQty: total });
-});
-
-
-/* ─────────────────────────────────────────────
-   GET /api/cart/:id/items  → all SKUs in cart with pricing
-────────────────────────────────────────────── */
-app.get('/api/cart/:id/items', async (req, res) => {
-  const db     = await getDB();
-  const cartId = +req.params.id;
-
-  try {
+  /* GET /api/products  –  1 row per visible title */
+  app.get('/api/products', async (_req, res) => {
     const rows = await db.all(`
       SELECT
-          c.SKUID,
-          p.Name,                    -- ← pull the product name from PRODUCTS
-          c.Qty,
-          s.Price,
-          (c.Qty * s.Price) AS lineTotal,
-          '/images/' || s.Picture    AS Picture
-      FROM   CARTPRODUCTS  c
-      JOIN   SKU           s ON s.SKUID  = c.SKUID
-      JOIN   PRODUCTS      p ON p.ProdID = s.ProdID
-      WHERE  c.CartID = ?
-    `, cartId);
-
+          MIN(s.SKUID)                AS SKUID,      -- a stable representative
+          p.Name,
+          MIN(s.Price)                AS Price,      -- choose cheapest variant
+          MIN('/images/'||s.Picture)  AS Picture,    -- any picture will do
+          MIN(s.Description)          AS Description
+      FROM   PRODUCTS p
+      JOIN   SKU      s  ON s.ProdID = p.ProdID
+      GROUP  BY p.Name                              -- collapse variants
+      ORDER  BY p.Name
+    `);
     res.json(rows);
-  } catch (err) {
-    console.error('Cart query error\n', err);
-    res.sendStatus(500);
-  }
-});
+  });
 
+  /* GET /api/search?query=… → up to 10 matching products */
+     app.get('/api/search', async (req, res) => {
+    const q = req.query.query || '';
+    try {
+      const rows = await db.all(`
+        SELECT
+          MIN(s.SKUID)                AS SKUID,
+          p.Name,
+          MIN('/images/'||s.Picture)  AS Picture,
+          MIN(s.Description)          AS Description
+        FROM   PRODUCTS p
+        JOIN   SKU      s  ON s.ProdID = p.ProdID
+        WHERE  LOWER(p.Name) LIKE '%' || LOWER(?) || '%'
+        GROUP  BY p.Name
+        ORDER  BY p.Name
+        LIMIT  10
+      `, q);
+      res.json(rows);
+    } catch (err) {
+      console.error('Search query error', err);
+      res.sendStatus(500);
+    }
+  });
+
+  /* ─────────────────────────────────────────────
+     POST /api/cart           { userId? } → returns cartId
+  ────────────────────────────────────────────── */
+  app.post('/api/cart', async (req, res) => {
+    const db = await getDB();
+    /* pick a valid UserID: if none sent → demo user 1 */
+    const uid = req.body?.userId ?? 1;
+    const x = await db.run(
+      `INSERT INTO CARTS (UserID) VALUES (?)`,
+      uid
+    );
+    res.status(201).json({ cartId: x.lastID });
+  });
+
+  /* ─────────────────────────────────────────────
+     POST /api/cart/:id/items   { skuId, qty }
+  ────────────────────────────────────────────── */
+  app.post('/api/cart/:id/items', async (req, res) => {
+    const db     = await getDB();
+    const cartId = +req.params.id;
+    let   { skuId, qty = 1 } = req.body || {};
+    skuId = +skuId; qty = +qty;
+    if (!skuId || !qty) return res.sendStatus(400);
+
+    // upsert delta
+    await db.run(`
+      INSERT INTO CARTPRODUCTS (CartID, SKUID, Qty)
+           VALUES (?,?,?)
+      ON CONFLICT (CartID,SKUID)
+         DO UPDATE SET Qty = Qty + excluded.Qty
+    `, cartId, skuId, qty);
+
+    // drop lines with Qty ≤ 0
+    await db.run(`
+      DELETE FROM CARTPRODUCTS
+       WHERE CartID = ? AND SKUID = ? AND Qty <= 0
+    `, cartId, skuId);
+
+    // new total
+    const { total } = await db.get(
+      `SELECT COALESCE(SUM(Qty),0) AS total
+         FROM CARTPRODUCTS
+        WHERE CartID = ?`,
+      cartId
+    );
+    res.json({ totalQty: total });
+  });
+
+  /* ─────────────────────────────────────────────
+     GET /api/cart/:id/items  → all SKUs in cart with pricing
+  ────────────────────────────────────────────── */
+  app.get('/api/cart/:id/items', async (req, res) => {
+    const db     = await getDB();
+    const cartId = +req.params.id;
+    try {
+      const rows = await db.all(`
+        SELECT
+            c.SKUID,
+            p.Name,
+            c.Qty,
+            s.Price,
+            (c.Qty * s.Price) AS lineTotal,
+            '/images/' || s.Picture    AS Picture
+        FROM   CARTPRODUCTS  c
+        JOIN   SKU           s ON s.SKUID  = c.SKUID
+        JOIN   PRODUCTS      p ON p.ProdID = s.ProdID
+        WHERE  c.CartID = ?
+      `, cartId);
+      res.json(rows);
+    } catch (err) {
+      console.error('Cart query error', err);
+      res.sendStatus(500);
+    }
+  });
 
   // ───── Start server ───────────────────────────────────────
   const PORT = process.env.PORT || 3000;

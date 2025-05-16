@@ -43,4 +43,38 @@
       margin-top: -300px; /* this moves it up */
       margin-left: -90px; /* this moves it left */
     }
-    
+    /* dropdown container */
+.search-wrapper {
+  position: relative;
+}
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+}
+.search-dropdown.visible {
+  display: block;
+}
+/* individual suggestion */
+.search-item {
+  padding: .5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.search-item img {
+  width: 24px;
+  height: 24px;
+  margin-right: .5rem;
+}
+.search-item:hover {
+  background: #f0f0f0;
+}
+

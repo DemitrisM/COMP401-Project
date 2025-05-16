@@ -6,11 +6,15 @@
 
   <!-- Icon libraries -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
 
   <!-- Styles -->
   <link rel="stylesheet" href="HomePageStyle.css" />
+  <link rel="stylesheet" href="search.css" />
+
   <title>Home Page</title>
 </head>
 <body>
@@ -22,9 +26,10 @@
     </div>
 
     <div class="nav-center">
-      <form class="search-wrapper expand-right" method="GET" action="/search">
+      <form class="search-wrapper expand-right" onsubmit="return false;">
         <i class="bi bi-search"></i>
-        <input type="text" name="query" placeholder="Search…" required />
+        <input type="text" name="query" placeholder="Search…" autocomplete="off" required />
+        <div class="search-dropdown" hidden></div>
       </form>
     </div>
 
@@ -33,7 +38,6 @@
         <i class="bi bi-cart3 cart-icon"></i>
         <div class="totalQuantity">0</div>
       </button>
-
       <div class="nav-buttons">
         <a href="LoginPage.html" class="btn signup-btn" id="signupTrigger">Log In</a>
       </div>
@@ -47,7 +51,6 @@
       <button class="arrow arrow-left" aria-label="Scroll left">
         <i class="bi bi-chevron-left"></i>
       </button>
-
       <div class="carousel-wrapper">
         <div class="carousel">
           <!-- eight hard-coded showcase cards -->
@@ -109,7 +112,6 @@
           </div>
         </div>
       </div>
-
       <button class="arrow arrow-right" aria-label="Scroll right">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -138,7 +140,9 @@
     <div class="listCart"><!-- filled by cartdrawer.js --></div>
     <div class="buttons">
       <div class="close">CLOSE</div>
-      <div class="checkout"><a href="checkout.html" style="color:white";>CHECKOUT</a></div>
+      <div class="checkout">
+        <a href="checkout.html" style="color:white;">CHECKOUT</a>
+      </div>
     </div>
   </div>
 
@@ -146,5 +150,6 @@
   <script src="carousel.js"></script>
   <script src="home.js"></script>
   <script defer src="cartdrawer.js"></script>
+  <script defer src="search.js"></script>
 </body>
 </html>
