@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAuthUI();
   loadCatalogue();
   initCartHandler();
-  syncCartCount();                 // ← NEW – show count on refresh
+  syncCartCount();                 // ← show count on refresh
 });
 
 /* ─── 1.  NAVBAR AUTH ─────────────────────────────────────── */
@@ -63,11 +63,16 @@ async function loadCatalogue () {
 
   items.forEach(p => {
     const node = cardT.cloneNode(true);
+
+    /* give the outer card a stable ID → used by search.js */
+    node.querySelector('.item').id = `sku-${p.SKUID}`;
+
     node.querySelector('img').src                    = p.Picture;
     node.querySelector('img').alt                    = p.Name;
     node.querySelector('.product-link').textContent  = p.Name;
     node.querySelector('.price').textContent         = `$${p.Price}`;
     node.querySelector('button').dataset.sku         = p.SKUID;
+
     list.appendChild(node);
   });
 }

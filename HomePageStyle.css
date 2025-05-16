@@ -267,8 +267,8 @@ body {
 
 .listProduct .item{position:relative;}
 .listProduct .item img{
-  width:101%;
-  height:300px;
+  width: 350;
+  height:350px;
   object-fit:fill;
 }
 .listProduct .item h2{
